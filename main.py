@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets
 import sys
 import json
+import os
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
@@ -14,7 +15,13 @@ def main():
     if file_path:
         base_path = "/".join(file_path.split("/")[:-1])
         
-        with open(f"{base_path}/config/games.yml") as file:
+        game_yml_path = f"{base_path}/config/games.yml"
+
+        if os.path.exists(f"{base_path}/games.yml"):
+            game_yml_path = f"{base_path}/games.yml"
+            print("old path for games.yml, reading root games.yml")
+
+        with open(game_yml_path) as file:
             games_data = file.read()
             file.close()
 
